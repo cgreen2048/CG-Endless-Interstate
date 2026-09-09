@@ -2,16 +2,18 @@ extends CharacterBody3D
 
 # adds properties to inspector in script
 # use to turn car tires
-@export var leftShoulder : CSGSphere3D
+@export var frontLeftWheel : CSGBox3D
+@export var frontRightWheel: CSGBox3D
 
 const MAX_SPEED = 25.0
+const MAX_WHEEL_ANGLE = 3.14159 / 6
 const ACCEL = 2.0
 const FRICTION = 1.0
 const ANGLE_ACCEL = 0.8
-const JUMP_VELOCITY = 4.5
+const WHEEL_ACCEL = 0.4
 
 var speed : float = 0.0
-
+var wheelAngle : float = 0.0
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -27,13 +29,17 @@ func _physics_process(delta: float) -> void:
 	#var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	
 	var angle = 0.0
+	var deltaAngle = 0.0
 	if Input.is_action_pressed("Turn Left"):
 		angle += delta * ANGLE_ACCEL
+		deltaAngle += delta * WHEEL_ACCEL
+		
 	if Input.is_action_pressed("Turn Right"):
 		angle -= delta * ANGLE_ACCEL
+		deltaAngle -= delta * WHEEL_ACCEL
 		
 	# function rotations around first arg axis by second arg angle
-	rotate(basis.y, angle)
+	#rotate(basis.y, angle)
 	
 	# negative z is the default forward vector
 	var direction := -basis.z
@@ -47,6 +53,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("Move Backward"):
 		speed -= delta * ACCEL
 		
+	
 	if speed > 0.0:
 		speed -= delta * FRICTION
 		if speed < 0.0:
@@ -60,6 +67,17 @@ func _physics_process(delta: float) -> void:
 		speed = MAX_SPEED
 	if speed < -MAX_SPEED:
 		speed = -MAX_SPEED
+		
+	if abs(wheelAngle + deltaAngle) > MAX_WHEEL_ANGLE:
+		if deltaAngle < 0.0:
+			deltaAngle = -(wheelAngle + MAX_WHEEL_ANGLE)
+			wheelAngle = -MAX_WHEEL_ANGLE
+		else:
+			deltaAngle = MAX_WHEEL_ANGLE - deltaAngle
+			wheelAngle = MAX_WHEEL_ANGLE
+	
+	frontLeftWheel.rotate(frontLeftWheel.basis.y.normalized(), deltaAngle)
+	frontRightWheel.rotate(frontLeftWheel.basis.y.normalized(), deltaAngle)
 	
 	direction *= speed
 	direction.y = velocity.y

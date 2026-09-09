@@ -3,13 +3,48 @@
 [ext_resource type="Script" uid="uid://byttx34utfipv" path="res://playable_character.gd" id="1_1vpmt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h4g8a"]
-size = Vector3(0.5, 1, 0.5)
+size = Vector3(0.75, 0.4, 1)
 
-[node name="PlayableCharacter" type="CharacterBody3D" unique_id=454011323]
+[sub_resource type="BoxShape3D" id="BoxShape3D_rqf30"]
+size = Vector3(0.2, 0.2, 0.3)
+
+[node name="PlayableCharacter" type="CharacterBody3D" unique_id=454011323 node_paths=PackedStringArray("frontLeftWheel", "frontRightWheel")]
 script = ExtResource("1_1vpmt")
+frontLeftWheel = NodePath("FLWheel/CSGBox3D")
+frontRightWheel = NodePath("FRWheel/CSGBox3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=989722533]
+[node name="CarBody" type="CollisionShape3D" parent="." unique_id=989722533]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6730969, 0)
 shape = SubResource("BoxShape3D_h4g8a")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=325017071]
-size = Vector3(0.5, 1, 0.5)
+[node name="CSGBox3D" type="CSGBox3D" parent="CarBody" unique_id=325017071]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.005316019, 0.0017762184, 0)
+size = Vector3(0.75, 0.4, 1)
+
+[node name="FRWheel" type="CollisionShape3D" parent="." unique_id=99415358]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.375, -0.5)
+shape = SubResource("BoxShape3D_rqf30")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="FRWheel" unique_id=1604890472]
+size = Vector3(0.2, 0.2, 0.3)
+
+[node name="FLWheel" type="CollisionShape3D" parent="." unique_id=728302210]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 0.375, -0.5)
+shape = SubResource("BoxShape3D_rqf30")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="FLWheel" unique_id=1479175734]
+size = Vector3(0.2, 0.2, 0.3)
+
+[node name="BLWheel" type="CollisionShape3D" parent="." unique_id=326288309]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 0.375, 0.45)
+shape = SubResource("BoxShape3D_rqf30")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="BLWheel" unique_id=1758669562]
+size = Vector3(0.2, 0.2, 0.3)
+
+[node name="BRWheel" type="CollisionShape3D" parent="." unique_id=847341113]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.375, 0.45)
+shape = SubResource("BoxShape3D_rqf30")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="BRWheel" unique_id=694390254]
+size = Vector3(0.2, 0.2, 0.3)

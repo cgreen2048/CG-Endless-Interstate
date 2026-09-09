@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bqvq77d61vfsr"]
+
+[ext_resource type="Texture2D" uid="uid://yo88s220bu0b" path="res://icon.svg" id="1_bwyfi"]
+[ext_resource type="PackedScene" uid="uid://wymwo6fo22nx" path="res://playable_character.tscn" id="2_df5pp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h4g8a"]
+size = Vector3(30, 0.5, 30)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_df5pp"]
+albedo_texture = ExtResource("1_bwyfi")
+
+[node name="GameLevel" type="Node3D" unique_id=816867359]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=18021453]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=577147033]
+shape = SubResource("BoxShape3D_h4g8a")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D/CollisionShape3D" unique_id=2128643672]
+material_override = SubResource("StandardMaterial3D_df5pp")
+size = Vector3(30, 0.5, 30)
+
+[node name="PlayableCharacter" parent="." unique_id=454011323 instance=ExtResource("2_df5pp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23293996, 0.81276035, -0.3253832)
+
+[node name="Camera3D" type="Camera3D" parent="PlayableCharacter" unique_id=277500597]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.29653955, 0.83398664, 2.043128)
+fov = 85.712296
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=333523756]
+transform = Transform3D(1, 0, 0, 0, -0.05358969, 0.99856305, 0, -0.99856305, -0.05358969, -0.085246086, 11.157897, -0.19077772)

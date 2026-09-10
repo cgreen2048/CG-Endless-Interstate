@@ -25,8 +25,8 @@ size = Vector3(30, 0.5, 30)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23293996, 0.81276035, -0.3253832)
 
 [node name="Camera3D" type="Camera3D" parent="PlayableCharacter" unique_id=277500597]
-transform = Transform3D(1, 0, 0, 0, 0.0052033067, 0.9999865, 0, -0.9999865, 0.0052033067, -0.071120024, 3.2017803, 0.8463149)
+transform = Transform3D(1, 0, 0, 0, 0.8660342, 0.49998486, 0, -0.49998486, 0.8660342, -0.071120024, 1.4552321, 2.417239)
 fov = 85.712296
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=333523756]
-transform = Transform3D(1, 0, 0, 0, -0.05358969, 0.99856305, 0, -0.99856305, -0.05358969, -0.085246086, 11.157897, -0.19077772)
+transform = Transform3D(1, 0, 0, 0, -0.05358969, 0.99856305, 0, -0.99856305, -0.05358969, -0.085246086, 11.157897, 0.026833594)

@@ -4,30 +4,62 @@ extends CharacterBody3D
 # use to turn car tires
 @export var frontLeftWheel : CSGBox3D
 @export var frontRightWheel: CSGBox3D
+
 @export var leftBrakeLight: SpotLight3D
 @export var rightBrakeLight: SpotLight3D
 @export var leftBrakeLightNode: CSGCylinder3D
 @export var rightBrakeLightNode: CSGCylinder3D
 
+@export var leftHeadLight: SpotLight3D
+@export var rightHeadLight: SpotLight3D
+@export var leftHeadLightNode: CSGCylinder3D
+@export var rightHeadLightNode: CSGCylinder3D
+
 const MAX_SPEED = 25.0
 const MAX_WHEEL_ANGLE = 3.14159 / 6
 const ACCEL = 2.0
+const BRAKE_DECEL = 4.0
 const FRICTION = 1.0
 const ANGLE_ACCEL = 0.8
 const WHEEL_ACCEL = 0.4
+const CAR_TURN_RATE = 1.0
 
 var speed : float = 0.0
 var wheelAngle : float = 0.0
+var headlights : bool = false
+
+func _ready() -> void:
+	headlights = false
+	
+	leftHeadLight.visible = false
+	rightHeadLight.visible = false
+	(leftHeadLightNode.material as StandardMaterial3D).emission_enabled = false
+	(rightHeadLightNode.material as StandardMaterial3D).emission_enabled = false
+	
+	leftBrakeLight.visible = false
+	rightBrakeLight.visible = false
+	(leftBrakeLightNode.material as StandardMaterial3D).emission_enabled = false
+	(rightBrakeLightNode.material as StandardMaterial3D).emission_enabled = false
+	
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+		
+	if Input.is_action_just_pressed("Toggle Headlights"):
+		headlights = not headlights
+		leftHeadLight.visible = headlights
+		rightHeadLight.visible = headlights
+		(leftHeadLightNode.material as StandardMaterial3D).emission_enabled = headlights
+		(rightHeadLightNode.material as StandardMaterial3D).emission_enabled = headlights
+		
+	var braking = Input.is_action_pressed("Brake")
 	
-	leftBrakeLight.visible = Input.is_action_pressed("Move Backward") and speed > 0.0
-	rightBrakeLight.visible = Input.is_action_pressed("Move Backward") and speed > 0.0
-	(leftBrakeLightNode.material as StandardMaterial3D).emission_enabled = Input.is_action_pressed("Move Backward") and speed > 0.0
-	(rightBrakeLightNode.material as StandardMaterial3D).emission_enabled = Input.is_action_pressed("Move Backward") and speed > 0.0
+	leftBrakeLight.visible = braking
+	rightBrakeLight.visible = braking
+	(leftBrakeLightNode.material as StandardMaterial3D).emission_enabled = braking
+	(rightBrakeLightNode.material as StandardMaterial3D).emission_enabled = braking
 	
 	# Handle jump.
 	#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
@@ -65,6 +97,12 @@ func _physics_process(delta: float) -> void:
 	# negative z is the default forward vector
 	var direction := -basis.z
 	
+	if speed != 0:
+		var carRotation = wheelAngle * CAR_TURN_RATE * delta
+		if speed > 0.0:
+			rotate(basis.y.normalized(), carRotation)
+		else:
+			rotate(basis.y.normalized(), -carRotation)
 	
 	# is_action_pressed accounts for holding down button
 	# is_action_just_pressed is for one time event
@@ -72,7 +110,18 @@ func _physics_process(delta: float) -> void:
 		speed += delta * ACCEL
 		
 	if Input.is_action_pressed("Move Backward"):
-		speed -= delta * ACCEL
+		if speed <= 0.0:
+			speed -= delta * ACCEL
+			
+	if braking:
+		if speed > 0.0:
+			speed -= delta * BRAKE_DECEL
+			if speed < 0.0:
+				speed = 0.0
+		elif speed < 0.0:
+			speed += delta * BRAKE_DECEL
+			if speed > 0.0:
+				speed = 0.0
 
 		
 	

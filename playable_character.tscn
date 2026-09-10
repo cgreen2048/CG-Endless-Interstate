@@ -8,19 +8,19 @@ size = Vector3(0.75, 0.4, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_rqf30"]
 size = Vector3(0.2, 0.2, 0.3)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ym0e"]
-albedo_color = Color(0.54509807, 0, 0, 1)
-emission_enabled = true
-emission = Color(0.93333334, 0, 0.2, 1)
-emission_energy_multiplier = 2.0
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rqf30"]
 albedo_color = Color(0.54509807, 0, 0, 1)
 emission_enabled = true
 emission = Color(0.93333334, 0, 0.2, 1)
 emission_energy_multiplier = 2.0
 
-[node name="PlayableCharacter" type="CharacterBody3D" unique_id=454011323 node_paths=PackedStringArray("frontLeftWheel", "frontRightWheel", "leftBrakeLight", "rightBrakeLight", "leftBrakeLightNode", "rightBrakeLightNode")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ym0e"]
+albedo_color = Color(0.54509807, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 5.0
+
+[node name="PlayableCharacter" type="CharacterBody3D" unique_id=454011323 node_paths=PackedStringArray("frontLeftWheel", "frontRightWheel", "leftBrakeLight", "rightBrakeLight", "leftBrakeLightNode", "rightBrakeLightNode", "leftHeadLight", "rightHeadLight", "leftHeadLightNode", "rightHeadLightNode")]
 script = ExtResource("1_1vpmt")
 frontLeftWheel = NodePath("FLWheel/CSGBox3D")
 frontRightWheel = NodePath("FRWheel/CSGBox3D")
@@ -28,6 +28,10 @@ leftBrakeLight = NodePath("LeftBrakeLight")
 rightBrakeLight = NodePath("RightBrakeLight")
 leftBrakeLightNode = NodePath("LeftBrakeLightNode")
 rightBrakeLightNode = NodePath("RightBrakeLightNode")
+leftHeadLight = NodePath("LeftHeadLight")
+rightHeadLight = NodePath("RightHeadLight")
+leftHeadLightNode = NodePath("LeftHeadLightNode")
+rightHeadLightNode = NodePath("RightHeadLightNode")
 
 [node name="CarBody" type="CollisionShape3D" parent="." unique_id=989722533]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6730969, 0)
@@ -66,21 +70,41 @@ shape = SubResource("BoxShape3D_rqf30")
 size = Vector3(0.2, 0.2, 0.3)
 
 [node name="LeftBrakeLight" type="SpotLight3D" parent="." unique_id=1044733277]
-transform = Transform3D(-0.9994646, 0.016726308, 0.02812258, 0.016812656, 0.9998547, 0.0028367285, -0.028071044, 0.0033080247, -0.99960047, -0.28670847, 0.59245276, 0.5393819)
+transform = Transform3D(-0.9998477, 0.017452406, -8.7422244e-08, 0.0174523, 0.99984163, 0.0034906515, 6.1007675e-05, 0.0034901183, -0.9999939, -0.257, 0.592, 0.539)
 light_color = Color(0.93333334, 0, 0.2, 1)
 
 [node name="RightBrakeLight" type="SpotLight3D" parent="." unique_id=2065858189]
-transform = Transform3D(-0.9994646, 0.016726308, 0.02812258, 0.016812656, 0.9998547, 0.0028367285, -0.028071044, 0.0033080247, -0.99960047, 0.29364708, 0.59245276, 0.5393819)
+transform = Transform3D(-0.9998477, 0.017452406, -8.7422244e-08, 0.0174523, 0.99984163, 0.0034906515, 6.1007675e-05, 0.0034901183, -0.9999939, 0.246, 0.592, 0.539)
 light_color = Color(0.93333334, 0, 0.2, 1)
 
-[node name="LeftBrakeLightNode" type="CSGCylinder3D" parent="." unique_id=843976799]
-transform = Transform3D(-1.173147e-05, -0.0036091977, -0.9999936, -0.9999948, 0.0032504206, 0, 0.003250399, 0.9999882, -0.0036092163, -0.2511101, 0.5922431, 0.49960595)
+[node name="RightBrakeLightNode" type="CSGCylinder3D" parent="." unique_id=1108045560]
+transform = Transform3D(1.9106857e-15, -4.371139e-08, -1.0000001, -1.0000001, -4.371139e-08, 0, -4.3711392e-08, 1, -4.3711392e-08, 0.24647462, 0.5922431, 0.49960595)
+radius = 0.08
+height = 0.1
+material = SubResource("StandardMaterial3D_rqf30")
+
+[node name="LeftHeadLight" type="SpotLight3D" parent="." unique_id=1933884858]
+transform = Transform3D(0.9998477, -0.017452406, 0, 0.0174523, 0.99984163, 0.0034906515, -6.0920265e-05, -0.00349012, 0.9999939, -0.247, 0.592, -0.539)
+light_energy = 8.0
+
+[node name="RightHeadLight" type="SpotLight3D" parent="." unique_id=1357922379]
+transform = Transform3D(0.9998477, -0.017452406, 0, 0.0174523, 0.99984163, 0.0034906515, -6.0920265e-05, -0.00349012, 0.9999939, 0.25, 0.592, -0.539)
+light_energy = 8.0
+
+[node name="LeftHeadLightNode" type="CSGCylinder3D" parent="." unique_id=1720210729]
+transform = Transform3D(1.9106857e-15, -4.371139e-08, 1.0000001, -1.0000001, -4.371139e-08, 0, 4.3711392e-08, -1, -4.3711392e-08, -0.251, 0.592, -0.5)
 radius = 0.08
 height = 0.1
 material = SubResource("StandardMaterial3D_8ym0e")
 
-[node name="RightBrakeLightNode" type="CSGCylinder3D" parent="." unique_id=1108045560]
-transform = Transform3D(-1.173147e-05, -0.0036091977, -0.9999936, -0.9999948, 0.0032504206, 0, 0.003250399, 0.9999882, -0.0036092163, 0.24647462, 0.5922431, 0.49960595)
+[node name="RightHeadLightNode" type="CSGCylinder3D" parent="." unique_id=2146083441]
+transform = Transform3D(1.9106857e-15, -4.371139e-08, 1.0000001, -1.0000001, -4.371139e-08, 0, 4.3711392e-08, -1, -4.3711392e-08, 0.25, 0.592, -0.5)
+radius = 0.08
+height = 0.1
+material = SubResource("StandardMaterial3D_8ym0e")
+
+[node name="LeftBrakeLightNode" type="CSGCylinder3D" parent="." unique_id=362769124]
+transform = Transform3D(1.9106857e-15, -4.371139e-08, -1.0000001, -1.0000001, -4.371139e-08, 0, -4.3711392e-08, 1, -4.3711392e-08, -0.25, 0.592, 0.5)
 radius = 0.08
 height = 0.1
 material = SubResource("StandardMaterial3D_rqf30")

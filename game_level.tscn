@@ -1,32 +1,192 @@
 [gd_scene format=3 uid="uid://bqvq77d61vfsr"]
 
-[ext_resource type="Texture2D" uid="uid://yo88s220bu0b" path="res://icon.svg" id="1_bwyfi"]
+[ext_resource type="Texture2D" uid="uid://cfk2bfc7lf504" path="res://textures/roadTexture.jpg" id="1_df5pp"]
+[ext_resource type="Script" uid="uid://462a7rc7yrfc" path="res://game_level.gd" id="1_wqyo1"]
 [ext_resource type="PackedScene" uid="uid://wymwo6fo22nx" path="res://playable_character.tscn" id="2_df5pp"]
+[ext_resource type="Script" uid="uid://ilk1ts1xishs" path="res://mile_marker.gd" id="3_ibsu8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h4g8a"]
-size = Vector3(30, 0.5, 30)
+size = Vector3(160, 0.5, 240)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_df5pp"]
-albedo_texture = ExtResource("1_bwyfi")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ibsu8"]
+albedo_texture = ExtResource("1_df5pp")
+texture_filter = 5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bwyfi"]
+size = Vector3(3.02, 2.077, 34)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8ym0e"]
+size = Vector3(24, 15, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7nt2s"]
+size = Vector3(24, 15, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y8cyr"]
+size = Vector3(24, 15, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_34pr7"]
+size = Vector3(24, 15, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qsd0w"]
+size = Vector3(24, 15, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ibsu8"]
+size = Vector3(24, 15, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3x3o8"]
+size = Vector3(24, 15, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e6lsw"]
+size = Vector3(24, 15, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_efyo6"]
+size = Vector3(24, 15, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u2mq0"]
+size = Vector3(24, 15, 0)
 
 [node name="GameLevel" type="Node3D" unique_id=816867359]
+script = ExtResource("1_wqyo1")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=18021453]
+[node name="UI" type="CanvasLayer" parent="." unique_id=557189930]
+
+[node name="MileLabel" type="Label" parent="UI" unique_id=925733637]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=18021453 groups=["ground"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=577147033]
 shape = SubResource("BoxShape3D_h4g8a")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D/CollisionShape3D" unique_id=2128643672]
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D" unique_id=2128643672]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0006432533, -2.3841858e-07, 0.010522604)
-material_override = SubResource("StandardMaterial3D_df5pp")
-size = Vector3(30, 0.5, 30)
+material_override = SubResource("StandardMaterial3D_ibsu8")
+size = Vector3(160, 0.5, 240)
 
-[node name="PlayableCharacter" parent="." unique_id=454011323 instance=ExtResource("2_df5pp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23293996, 0.81276035, -0.3253832)
+[node name="PlayableCharacter" parent="." unique_id=454011323 node_paths=PackedStringArray("cameraPivot", "camera") instance=ExtResource("2_df5pp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.02835, 5.4196835, -0.3253832)
+cameraPivot = NodePath("../CameraPivot")
+camera = NodePath("../CameraPivot/Camera3D")
 
-[node name="Camera3D" type="Camera3D" parent="PlayableCharacter" unique_id=277500597]
-transform = Transform3D(1, 0, 0, 0, 0.8660342, 0.49998486, 0, -0.49998486, 0.8660342, -0.071120024, 2.1577094, 2.417239)
+[node name="CameraPivot" type="Node3D" parent="." unique_id=341132811]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.02835, 5.4196835, -0.3253827)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=277500597]
+transform = Transform3D(1, 0, 0, 0, 0.7926012, 0.60974044, 0, -0.60974044, 0.7926012, -0.071120024, 2.2036743, 1.7659612)
 fov = 85.712296
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=333523756]
-transform = Transform3D(1, 0, 0, 0, -0.05358969, 0.99856305, 0, -0.99856305, -0.05358969, -0.085246086, 11.157897, 0.026833594)
+transform = Transform3D(1, 0, 0, 0, -0.46489674, 0.8853649, 0, -0.8853649, -0.46489674, -0.085246086, 45.623486, 0.026833594)
+light_energy = 0.525
+
+[node name="Ramp" type="StaticBody3D" parent="." unique_id=1602332256]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ramp" unique_id=1842571918]
+transform = Transform3D(1, 0, 0, 0, 0.924625, -0.38087887, 0, 0.38087887, 0.924625, 63.761562, 5.617606, -63.560505)
+shape = SubResource("BoxShape3D_bwyfi")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Ramp/CollisionShape3D" unique_id=7266954]
+transform = Transform3D(1, 0, 0, 0, 0.99999845, 0.0017259717, 0, -0.0017259717, 0.99999845, 0.001, 0, 0)
+size = Vector3(3.057, 1, 34)
+
+[node name="MileMarker1" type="Area3D" parent="." unique_id=834546303 node_paths=PackedStringArray("nextMileMarker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57, 0, -33)
+script = ExtResource("3_ibsu8")
+nextMileMarker = NodePath("../MileMarker2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MileMarker1" unique_id=413116605]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.665, 0)
+shape = SubResource("BoxShape3D_8ym0e")
+
+[node name="MileMarker2" type="Area3D" parent="." unique_id=478722031 node_paths=PackedStringArray("nextMileMarker")]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 47.443295, 0, -85.28816)
+script = ExtResource("3_ibsu8")
+nextMileMarker = NodePath("../MileMarker3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MileMarker2" unique_id=537715830]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, -1.6961517, 7.664878, -0.65849304)
+shape = SubResource("BoxShape3D_7nt2s")
+
+[node name="MileMarker3" type="Area3D" parent="." unique_id=402877045 node_paths=PackedStringArray("nextMileMarker")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, -95)
+script = ExtResource("3_ibsu8")
+nextMileMarker = NodePath("../MileMarker4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MileMarker3" unique_id=1679665533]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 7.665, 1)
+shape = SubResource("BoxShape3D_y8cyr")
+
+[node name="MileMarker4" type="Area3D" parent="." unique_id=1701735539 node_paths=PackedStringArray("nextMileMarker")]
+transform = Transform3D(-0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, -0.70710677, -47.00338, 0, -84.12213)
+script = ExtResource("3_ibsu8")
+nextMileMarker = NodePath("../MileMarker5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MileMarker4" unique_id=1026440350]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0297966, 7.664878, 0.009185791)
+shape = SubResource("BoxShape3D_34pr7")
+
+[node name="MileMarker5" type="Area3D" parent="." unique_id=694627598 node_paths=PackedStringArray("nextMileMarker")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -58, 0, -33)
+script = ExtResource("3_ibsu8")
+nextMileMarker = NodePath("../MileMarker6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MileMarker5" unique_id=1994847102]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.665, 0)
+shape = SubResource("BoxShape3D_qsd0w")
+
+[node name="MileMarker6" type="Area3D" parent="." unique_id=538501386 node_paths=PackedStringArray("nextMileMarker")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -58, 0, 33)
+script = ExtResource("3_ibsu8")
+nextMileMarker = NodePath("../MileMarker7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MileMarker6" unique_id=1373066697]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.665, 0)
+shape = SubResource("BoxShape3D_ibsu8")
+
+[node name="MileMarker7" type="Area3D" parent="." unique_id=1681093219 node_paths=PackedStringArray("nextMileMarker")]
+transform = Transform3D(-0.7071068, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071068, -44.805687, 0, 87.58865)
+script = ExtResource("3_ibsu8")
+nextMileMarker = NodePath("../MileMarker8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MileMarker7" unique_id=1446577319]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3001175, 7.665, 1.7397594)
+shape = SubResource("BoxShape3D_3x3o8")
+
+[node name="MileMarker8" type="Area3D" parent="." unique_id=790914924 node_paths=PackedStringArray("nextMileMarker")]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 0, 0, 95)
+script = ExtResource("3_ibsu8")
+nextMileMarker = NodePath("../MileMarker9")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MileMarker8" unique_id=310149882]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.665, 0.647)
+shape = SubResource("BoxShape3D_e6lsw")
+
+[node name="MileMarker9" type="Area3D" parent="." unique_id=2060432267 node_paths=PackedStringArray("nextMileMarker")]
+transform = Transform3D(0.70710665, 0, -0.7071069, 0, 1, 0, 0.7071069, 0, 0.70710665, 47.443295, 0, 84.001755)
+script = ExtResource("3_ibsu8")
+nextMileMarker = NodePath("../MileMarker10")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MileMarker9" unique_id=613505307]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.47207642, 7.665, -0.47208023)
+shape = SubResource("BoxShape3D_efyo6")
+
+[node name="MileMarker10" type="Area3D" parent="." unique_id=1197293870 node_paths=PackedStringArray("nextMileMarker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57, 0, 33)
+script = ExtResource("3_ibsu8")
+nextMileMarker = NodePath("../MileMarker1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MileMarker10" unique_id=197966549]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.665, 0)
+shape = SubResource("BoxShape3D_u2mq0")
+
+[connection signal="mile_passed" from="MileMarker1" to="." method="_on_mile_passed"]
+[connection signal="mile_passed" from="MileMarker2" to="." method="_on_mile_passed"]
+[connection signal="mile_passed" from="MileMarker3" to="." method="_on_mile_passed"]
+[connection signal="mile_passed" from="MileMarker4" to="." method="_on_mile_passed"]
+[connection signal="mile_passed" from="MileMarker5" to="." method="_on_mile_passed"]
+[connection signal="mile_passed" from="MileMarker6" to="." method="_on_mile_passed"]
+[connection signal="mile_passed" from="MileMarker7" to="." method="_on_mile_passed"]
+[connection signal="mile_passed" from="MileMarker8" to="." method="_on_mile_passed"]
+[connection signal="mile_passed" from="MileMarker9" to="." method="_on_mile_passed"]
+[connection signal="mile_passed" from="MileMarker10" to="." method="_on_mile_passed"]

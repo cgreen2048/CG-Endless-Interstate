@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://wymwo6fo22nx"]
+[gd_scene format=3 uid="uid://doykhu21qnkrb"]
 
-[ext_resource type="Script" uid="uid://byttx34utfipv" path="res://playable_character.gd" id="1_1vpmt"]
-[ext_resource type="PackedScene" uid="uid://d13gxy6xwq3yt" path="res://car.blend" id="2_luuih"]
-[ext_resource type="PackedScene" uid="uid://8yai11pxiuix" path="res://wheel.blend" id="3_j31e8"]
+[ext_resource type="Script" uid="uid://d0gdxpxgdtgaj" path="res://ai_car.gd" id="1_ejsn0"]
+[ext_resource type="PackedScene" uid="uid://d13gxy6xwq3yt" path="res://car.blend" id="2_l0ycv"]
+[ext_resource type="PackedScene" uid="uid://8yai11pxiuix" path="res://wheel.blend" id="3_a5l6v"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h4g8a"]
 size = Vector3(0.75, 0.4, 1)
@@ -34,14 +34,11 @@ emission_enabled = true
 emission = Color(0.93333334, 0, 0.2, 1)
 emission_energy_multiplier = 2.0
 
-[node name="PlayerCar" type="CharacterBody3D" unique_id=454011323 node_paths=PackedStringArray("frontLeftWheel", "frontRightWheel", "frWheelRay", "flWheelRay", "blWheelRay", "brWheelRay", "leftBrakeLight", "rightBrakeLight", "leftBrakeLightNode", "rightBrakeLightNode", "leftHeadLight", "rightHeadLight", "leftHeadLightNode", "rightHeadLightNode")]
-script = ExtResource("1_1vpmt")
-frontLeftWheel = NodePath("FLWheel/wheel")
-frontRightWheel = NodePath("FRWheel/wheel")
-frWheelRay = NodePath("FRWheel/RayCast3D")
-flWheelRay = NodePath("FLWheel/RayCast3D")
-blWheelRay = NodePath("BLWheel/RayCast3D")
-brWheelRay = NodePath("BLWheel/RayCast3D")
+[sub_resource type="BoxShape3D" id="BoxShape3D_8ym0e"]
+size = Vector3(4, 0.7, 8)
+
+[node name="AI Car" type="CharacterBody3D" unique_id=454011323 node_paths=PackedStringArray("leftBrakeLight", "rightBrakeLight", "leftBrakeLightNode", "rightBrakeLightNode", "leftHeadLight", "rightHeadLight", "leftHeadLightNode", "rightHeadLightNode", "carDetectionArea")]
+script = ExtResource("1_ejsn0")
 leftBrakeLight = NodePath("LeftBrakeLight")
 rightBrakeLight = NodePath("RightBrakeLight")
 leftBrakeLightNode = NodePath("LeftBrakeLightNode")
@@ -50,19 +47,20 @@ leftHeadLight = NodePath("LeftHeadLight")
 rightHeadLight = NodePath("RightHeadLight")
 leftHeadLightNode = NodePath("LeftHeadLightNode")
 rightHeadLightNode = NodePath("RightHeadLightNode")
+carDetectionArea = NodePath("CarDetectionArea")
 
 [node name="CarBody" type="CollisionShape3D" parent="." unique_id=989722533]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17249018, 0)
 shape = SubResource("BoxShape3D_h4g8a")
 
-[node name="car" parent="CarBody" unique_id=699038381 instance=ExtResource("2_luuih")]
+[node name="car" parent="CarBody" unique_id=699038381 instance=ExtResource("2_l0ycv")]
 transform = Transform3D(-0.5, 0, -4.371139e-08, 0, 0.5, 0, 4.371139e-08, 0, -0.5, 0.0023447275, -0.069048226, 0.02866435)
 
 [node name="FRWheel" type="CollisionShape3D" parent="." unique_id=99415358]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, -0.19166988, -0.4)
 shape = SubResource("BoxShape3D_rqf30")
 
-[node name="wheel" parent="FRWheel" unique_id=924589971 instance=ExtResource("3_j31e8")]
+[node name="wheel" parent="FRWheel" unique_id=924589971 instance=ExtResource("3_a5l6v")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.020495474, 0.046063155, 0)
 
 [node name="RayCast3D" type="RayCast3D" parent="FRWheel" unique_id=1199164459]
@@ -72,7 +70,7 @@ target_position = Vector3(0, -0.26, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, -0.1979056, -0.4)
 shape = SubResource("BoxShape3D_rqf30")
 
-[node name="wheel" parent="FLWheel" unique_id=1271999425 instance=ExtResource("3_j31e8")]
+[node name="wheel" parent="FLWheel" unique_id=1271999425 instance=ExtResource("3_a5l6v")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.021599948, 0.048298866, 0.01996094)
 
 [node name="RayCast3D" type="RayCast3D" parent="FLWheel" unique_id=409999300]
@@ -82,7 +80,7 @@ target_position = Vector3(0, -0.26, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, -0.19578207, 0.4)
 shape = SubResource("BoxShape3D_rqf30")
 
-[node name="wheel" parent="BLWheel" unique_id=2087643038 instance=ExtResource("3_j31e8")]
+[node name="wheel" parent="BLWheel" unique_id=2087643038 instance=ExtResource("3_a5l6v")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.018000007, 0.05017534, 0)
 
 [node name="RayCast3D" type="RayCast3D" parent="BLWheel" unique_id=1371816870]
@@ -92,7 +90,7 @@ target_position = Vector3(0, -0.26, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, -0.19759303, 0.4)
 shape = SubResource("BoxShape3D_rqf30")
 
-[node name="wheel" parent="BRWheel" unique_id=1601355350 instance=ExtResource("3_j31e8")]
+[node name="wheel" parent="BRWheel" unique_id=1601355350 instance=ExtResource("3_a5l6v")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.018306494, 0.04698631, 0)
 
 [node name="RayCast3D" type="RayCast3D" parent="BRWheel" unique_id=764620160]
@@ -137,3 +135,9 @@ transform = Transform3D(1.9106857e-15, -4.371139e-08, -1.0000001, -1.0000001, -4
 radius = 0.08
 height = 0.1
 material = SubResource("StandardMaterial3D_oex5r")
+
+[node name="CarDetectionArea" type="Area3D" parent="." unique_id=1464381262]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CarDetectionArea" unique_id=884316752]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.026348114, -1.7953613)
+shape = SubResource("BoxShape3D_8ym0e")

@@ -87,10 +87,9 @@ fov = 85.712296
 transform = Transform3D(1, 0, 0, 0, -0.46489674, 0.8853649, 0, -0.8853649, -0.46489674, -0.085246086, 45.623486, 0.026833594)
 light_energy = 0.525
 
-[node name="AICar" parent="." unique_id=383324408 node_paths=PackedStringArray("mileMarkers") instance=ExtResource("4_efyo6")]
+[node name="AICar" parent="." unique_id=383324408 instance=ExtResource("4_efyo6")]
 transform = Transform3D(-0.99830157, 0, -0.058257803, 0, 1, 0, 0.058257803, 0, -0.99830157, 50.675007, 3.7727373, 15.509605)
 script = ExtResource("5_wqyo1")
-mileMarkers = [NodePath("../MileMarker10"), NodePath("../MileMarker9"), NodePath("../MileMarker8"), NodePath("../MileMarker7"), NodePath("../MileMarker6"), NodePath("../MileMarker5"), NodePath("../MileMarker4"), NodePath("../MileMarker3"), NodePath("../MileMarker2"), NodePath("../MileMarker1")]
 
 [node name="Ramp" type="StaticBody3D" parent="." unique_id=1602332256 groups=["ground"]]
 
